@@ -1,19 +1,36 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+
+
+    id 'kotlin-kapt'
 }
+
+//apply plugin: 'kotlin-kapt'
 
 android {
     compileSdk 31
 
     defaultConfig {
         applicationId "compmobiles.projet"
-        minSdk 28
-        targetSdk 31
+        minSdk 26
+        targetSdk 28
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
+        // Pour Room
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
+        // Pour Room FIN
     }
 
     buildTypes {
@@ -35,7 +52,6 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
@@ -45,4 +61,17 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+
+    def lifecycle_version = "2.4.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version" // ViewModel
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version" // LiveData
+
+    implementation "androidx.recyclerview:recyclerview:1.2.1" // RecyclerView
+    //implementation "androidx.recyclerview:recyclerview-selection:1.2.0-alpha01"
+
+    // Room
+    def room_version = "2.3.0"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }
