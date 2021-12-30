@@ -1,10 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="compmobiles.projet.MainActivity">
+    tools:context="compmobiles.projet.ListePlantesActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_alarme"
         android:orderInCategory="100"
-        android:title="Paramètres"
+        android:title="Configurer la notification"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_arrosage"
+        android:orderInCategory="100"
+        android:title="Plantes à arroser"
         app:showAsAction="never" />
 </menu>
