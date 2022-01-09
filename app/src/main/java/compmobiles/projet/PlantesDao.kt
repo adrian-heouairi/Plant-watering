@@ -19,5 +19,8 @@ interface PlantesDao {
     fun loadPlante(nom: String): Plante
 
     @Query("SELECT * FROM Plante")
-    fun loadAllPlantes(): LiveData<List<Plante>>
+    fun loadAllPlantes(): List<Plante>
+
+    @Query("SELECT * FROM Plante")
+    fun loadAllPlantesLiveData(): LiveData<List<Plante>>
 }

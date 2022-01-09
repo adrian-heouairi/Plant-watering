@@ -1,5 +1,6 @@
 package compmobiles.projet
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -34,7 +35,7 @@ class ListePlantesActivity : AppCompatActivity() {
 
         var liveDataPlantes: LiveData<List<Plante>>? = null
         val t = Thread {
-            liveDataPlantes = dao.loadAllPlantes()
+            liveDataPlantes = dao.loadAllPlantesLiveData()
         }
         t.start()
         t.join()
@@ -58,7 +59,12 @@ class ListePlantesActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_alarme -> { true }
-            R.id.action_arrosage -> { true }
+            R.id.action_arrosage -> {
+                val intent = Intent(this, ListeArrosageActivity::class.java)
+                startActivity(intent)
+
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

@@ -10,9 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Arrosage">
         <activity
+            android:name=".ListeArrosageActivity"
+            android:exported="true"
+            android:label="Plantes à arroser"
+            android:theme="@style/Theme.Arrosage.NoActionBar" />
+        <activity
             android:name=".ListePlantesActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="Arrosage"
             android:theme="@style/Theme.Arrosage.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
