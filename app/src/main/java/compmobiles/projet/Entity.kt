@@ -1,23 +1,24 @@
 package compmobiles.projet
 
 import androidx.room.*
+import java.time.LocalDate
 import java.util.*
 
 @Entity
-data class Plantes(
-    @PrimaryKey
+data class Plante(
+    @PrimaryKey(autoGenerate = true)
+    var idPlante: Int = 0,
     var nom_com: String,
-    var nom_lat: String?,
-    var freq1: Int,
-    var freq2: Int?,
-    var freq3: Int?,
-    var date1: Long?,
-    var date2: Long?,
-    var date3: Long?,
-    var freq_vit1 : Int,
-    var freq_vit2 : Int,
-    var freq_vit3 : Int,
-    var date: Long,
-    var photo: String
-
+    var nom_lat: String? = "",
+    var dateDernier: LocalDate? = null,
+    var freq1: Int = 7,
+    var freq2: Int? = -1,
+    var freq3: Int? = -1,
+    var date1: LocalDate? = null,
+    var date2: LocalDate? = null,
+    var date3: LocalDate? = null,
+    var freq_nut1 : Int? = 0,
+    var freq_nut2 : Int? = 0,
+    var freq_nut3 : Int? = 0,
+    var photo: String? = ""
 )

@@ -1,9 +1,11 @@
 package compmobiles.projet
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import compmobiles.projet.databinding.ActivityListePlantesBinding
@@ -19,17 +21,33 @@ class ListePlantesActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        val dao = PlantesDatabase.getDatabase(application).plantesDao()
+
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Ajout d'une plante", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+
+            Thread {
+                Log.d("BDD", dao.insertPlante(Plante(0, "Abc")).toString())
+            }.start()
         }
 
-        val listePlantes = ArrayList<Plante>()
-        for (i in 0..49) { listePlantes.add(Plante("Plante " + i)) }
-        val listePlantesAdapter = ListePlantesAdapter(this, listePlantes)
-        binding.recyclerplantes.hasFixedSize()
+        var liveDataPlantes: LiveData<List<Plante>>? = null
+        val t = Thread {
+            liveDataPlantes = dao.loadAllPlantes()
+        }
+        t.start()
+        t.join()
+
+        val listePlantesAdapter = ListePlantesAdapter(this, listOf<Plante>())
+        //binding.recyclerplantes.hasFixedSize()
         binding.recyclerplantes.layoutManager = LinearLayoutManager(this)
         binding.recyclerplantes.adapter = listePlantesAdapter
+
+        liveDataPlantes!!.observe(this) {
+            listePlantesAdapter.plantes = it
+            listePlantesAdapter.notifyDataSetChanged()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

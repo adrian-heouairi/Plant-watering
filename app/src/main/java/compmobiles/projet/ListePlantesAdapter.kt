@@ -10,15 +10,13 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class Plante(val nom: String)
-
-class ListePlantesAdapter(val context: Context, val plantes: List<Plante>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ListePlantesAdapter(val context: Context, var plantes: List<Plante>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class PlanteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     val listener = { view: View ->
         val intent = Intent(context, ListePlantesActivity::class.java)
         val bundle = Bundle()
-        bundle.putInt("planteId", 3)
+        bundle.putInt("planteId", (view.tag as Plante).idPlante)
         intent.putExtras(bundle)
         startActivity(context, intent, null)
 
@@ -35,7 +33,8 @@ class ListePlantesAdapter(val context: Context, val plantes: List<Plante>) : Rec
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val textView = holder.itemView as TextView
-        textView.text = plantes[position].nom
+        textView.text = plantes[position].nom_com
+
         textView.tag = plantes[position]
     }
 
