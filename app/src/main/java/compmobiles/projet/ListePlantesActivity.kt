@@ -28,10 +28,12 @@ class ListePlantesActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Ajout d'une plante", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
-            val intent= Intent(this, EditerPlanteActivity::class.java)
-            startActivity(intent)
+
+            //val intent = Intent(this, EditerPlanteActivity::class.java)
+            //startActivity(intent)
+
             Thread {
-                Log.d("BDD", dao.insertPlante(Plante(0, "Abc")).toString())
+                Log.d("BDD", dao.insertPlante(Plante(0, "Orchidée")).toString())
             }.start()
         }
 

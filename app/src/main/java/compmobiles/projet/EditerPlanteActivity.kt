@@ -16,7 +16,7 @@ import java.time.LocalDate
 class EditerPlanteActivity : AppCompatActivity(){
     private lateinit var binding: ActivityEditerPlanteBinding
 
-    var localUri : Uri? = null
+    /*var localUri : Uri? = null
     /* la propriété getContent pour enregistrer une méthode callback
     * appelée au retour de la nouvelle activité.
     * Ici cette méthode callback est implementée par une lambda qui
@@ -49,14 +49,15 @@ class EditerPlanteActivity : AppCompatActivity(){
 //éventuellement afficher l’image dans ImageView
         binding.imageView.setImageURI(localUri)
 
-    }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val intent = intent
         val bundle = intent.extras
-        val idPlante: Int =bundle?.getInt("planteId") ?:0
+        val idPlante: Int =bundle?.getInt("planteId") ?: 0
+
         binding = ActivityEditerPlanteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -64,16 +65,16 @@ class EditerPlanteActivity : AppCompatActivity(){
 
         val dao = PlantesDatabase.getDatabase(application).plantesDao()
 
-        val selectButton = binding.butPhoto
+        //val selectButton = binding.butPhoto
 
-        selectButton.setOnClickListener {
-            getContent.launch("image/*")
-        }
+        //selectButton.setOnClickListener {
+        //    getContent.launch("image/*")
+        //}
 
         val suppressionButton =binding.supprimer
         val validationButton = binding.valider
 
-        var nom_com = binding.nomcom.toString()
+        /*var nom_com = binding.nomcom.toString()
         var nom_lat = binding.nomlat.toString()
         var freq1 = binding.freq1.toString().toInt()
         var freq2 = binding.freq2.toString().toInt()
@@ -84,16 +85,16 @@ class EditerPlanteActivity : AppCompatActivity(){
         var datefin2 = binding.datefin2.toString().toInt()
         var datedebut3 = binding.datedebut3.toString().toInt()
         var datefin3 = binding.datefin3.toString().toInt()
-        var photo= localUri.toString()
+        var photo= localUri.toString()*/
 
-        if (idPlante!=null){
-            var plante = Plante(0,"")
+        var plante = Plante(0,"")
+        if (idPlante!=0){
             val t = Thread {
                 plante = dao.loadPlante(idPlante)
             }
             t.start()
             t.join()
-            nom_com= plante.nom_com
+            /*nom_com= plante.nom_com
             nom_lat = plante.nom_lat
             freq1 = plante.freq1
             freq2 = plante.freq2
@@ -104,25 +105,57 @@ class EditerPlanteActivity : AppCompatActivity(){
             datefin2 = plante.date2_fin
             datedebut3 = plante.date3_debut
             datefin3 = plante.date3_fin
-            photo = plante.photo
+            photo = plante.photo*/
         }
 
+        binding.nomcom.setText(plante.nom_com)
+        binding.nomlat.setText(plante.nom_lat)
+        binding.freq1.setText(plante.freq1)
+        binding.freq2.setText(plante.freq2)
+        binding.freq3.setText(plante.freq3)
+        binding.datedebut1.setText(plante.date1_debut)
+        binding.datefin1.setText(plante.date1_fin)
+        binding.datedebut2.setText(plante.date2_debut)
+        binding.datefin2.setText(plante.date2_fin)
+        binding.datedebut3.setText(plante.date3_debut)
+        binding.datefin3.setText(plante.date3_fin)
+        //localUri.toString()
 
         validationButton.setOnClickListener {
             val t = Thread {
-                if (dao.loadPlante(idPlante)!=null){
+                if (idPlante!=0){
                     dao.updatePlante(
                         Plante(
-                            idPlante, nom_com, nom_lat, freq1, freq2, freq3,
-                            datedebut1, datefin1, datedebut2, datefin2, datedebut3, datefin3, photo, LocalDate.now()
+                            idPlante,
+                            binding.nomcom.toString(),
+                            binding.nomlat.toString(),
+                            binding.freq1.toString().toInt(),
+                            binding.freq2.toString().toInt(),
+                            binding.freq3.toString().toInt(),
+                            binding.datedebut1.toString().toInt(),
+                            binding.datefin1.toString().toInt(),
+                            binding.datedebut2.toString().toInt(),
+                            binding.datefin2.toString().toInt(),
+                            binding.datedebut3.toString().toInt(),
+                            binding.datefin3.toString().toInt()
                         )
                     )
                 }
                 else {
                     dao.insertPlante(
                         Plante(
-                            0,nom_com, nom_lat, freq1, freq2, freq3,
-                            datedebut1, datefin1, datedebut2, datefin2, datedebut3, datefin3, photo, LocalDate.now()
+                            0,
+                            binding.nomcom.toString(),
+                            binding.nomlat.toString(),
+                            binding.freq1.toString().toInt(),
+                            binding.freq2.toString().toInt(),
+                            binding.freq3.toString().toInt(),
+                            binding.datedebut1.toString().toInt(),
+                            binding.datefin1.toString().toInt(),
+                            binding.datedebut2.toString().toInt(),
+                            binding.datefin2.toString().toInt(),
+                            binding.datedebut3.toString().toInt(),
+                            binding.datefin3.toString().toInt()
                         )
                     )
                 }
@@ -134,10 +167,7 @@ class EditerPlanteActivity : AppCompatActivity(){
 
         suppressionButton.setOnClickListener {
             val t = Thread {
-                dao.deletePlante(
-                    Plante(
-                        idPlante, nom_com, nom_lat, freq1, freq2, freq3,
-                        datedebut1, datefin1, datedebut2, datefin2, datedebut3, datefin3, photo, LocalDate.now()))
+                dao.deletePlante(plante)
             }
             t.start()
             t.join()

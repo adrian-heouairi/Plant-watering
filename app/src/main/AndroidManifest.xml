@@ -20,6 +20,11 @@
             android:name=".AlarmeActivity"
             android:exported="true" />
         <activity
+            android:name=".EditerPlanteActivity"
+            android:theme="@style/Theme.Arrosage.NoActionBar"
+            android:label="Plante"
+            android:exported="false" />
+        <activity
             android:name=".ListeArrosageActivity"
             android:exported="true"
             android:label="Plantes à arroser"
