@@ -10,10 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import compmobiles.projet.databinding.ActivityListeArrosageBinding
+import java.time.LocalDate
 
 class ListeArrosageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityListeArrosageBinding
     private lateinit var viewmodel: ListeArrosageViewModel
+    private lateinit var dao: PlantesDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +26,7 @@ class ListeArrosageActivity : AppCompatActivity() {
 
         viewmodel = ViewModelProvider(this).get(ListeArrosageViewModel::class.java)
 
-        val dao = PlantesDatabase.getDatabase(application).plantesDao()
+        dao = PlantesDatabase.getDatabase(application).plantesDao()
 
         if (viewmodel.plantesAArroser == null) {
             var plantes: List<Plante>? = null
@@ -53,7 +55,29 @@ class ListeArrosageActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_valider -> { true }
+            R.id.action_valider -> {
+                val plantesArrosees = mutableListOf<Plante>()
+                for (i in viewmodel.plantesAArroser!!) {
+                    if (! viewmodel.plantesCochees!!.contains(i)) {
+                        plantesArrosees.add(i)
+                    }
+                }
+
+                val aujourdhui = LocalDate.now()
+                for (i in plantesArrosees) {
+                    i.dateDernier = aujourdhui
+                }
+
+                val t = Thread {
+                    dao.updatePlantes(plantesArrosees)
+                }
+                t.start()
+                t.join()
+
+                finish()
+
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

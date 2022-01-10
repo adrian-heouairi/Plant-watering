@@ -12,6 +12,9 @@ interface PlantesDao {
     @Update
     fun updatePlante(plante: Plante) : Int
 
+    @Update
+    fun updatePlantes(plantes: List<Plante>)
+
     @Delete
     fun deletePlante(plante: Plante) : Int
 
