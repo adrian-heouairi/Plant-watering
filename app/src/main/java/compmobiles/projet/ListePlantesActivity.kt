@@ -58,7 +58,12 @@ class ListePlantesActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_alarme -> { true }
+            R.id.action_alarme -> {
+                val intent = Intent(this, AlarmeActivity::class.java)
+                startActivity(intent)
+
+                true
+            }
             R.id.action_arrosage -> {
                 val intent = Intent(this, ListeArrosageActivity::class.java)
                 startActivity(intent)
