@@ -1,5 +1,6 @@
 package compmobiles.projet
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -19,6 +20,12 @@ class ListeArrosageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val serviceIntent = Intent(this, NotificationArrosageService::class.java)
+        if (stopService(serviceIntent))
+            Log.d("SERVICE", "stopService a réussi")
+        else
+            Log.d("SERVICE", "stopService n'a pas réussi")
 
         binding = ActivityListeArrosageBinding.inflate(layoutInflater)
         setContentView(binding.root)
