@@ -75,62 +75,56 @@
             tools:layout_editor_absoluteY="191dp" />
 
         <EditText
-            android:id="@+id/date1"
+            android:id="@+id/datedebut1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="date 1"
-            android:inputType="date"
+            android:hint="date debut 1"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="236dp" />
 
         <EditText
-            android:id="@+id/date2"
+            android:id="@+id/datefin1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="date 2"
-            android:inputType="date"
+            android:hint="date fin 1"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="281dp" />
 
         <EditText
-            android:id="@+id/date3"
+            android:id="@+id/datedebut2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="date 3"
-            android:inputType="date"
+            android:hint="date debut 2"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="326dp" />
 
         <EditText
-            android:id="@+id/freqnut1"
+            android:id="@+id/datefin2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="frequence nutriment 1"
-            android:inputType="number"
+            android:hint="date fin 2"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="236dp" />
 
         <EditText
-            android:id="@+id/freqnut2"
+            android:id="@+id/datedebut3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="frequence nutriment 2"
-            android:inputType="number"
+            android:hint="date debut 3"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="281dp" />
 
         <EditText
-            android:id="@+id/freqnut3"
+            android:id="@+id/datefin3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="frequence nutriment 3"
-            android:inputType="number"
+            android:hint="date fin 3"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="326dp" />
 
@@ -151,6 +145,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Valider" />
+
+        <Button
+            android:id="@+id/supprimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Supprimer" />
 
 
     </LinearLayout>

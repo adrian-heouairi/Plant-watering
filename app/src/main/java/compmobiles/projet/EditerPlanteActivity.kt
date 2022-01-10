@@ -1,8 +1,10 @@
 package compmobiles.projet
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -52,6 +54,9 @@ class EditerPlanteActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val intent = intent
+        val bundle = intent.extras
+        val idPlante: Int =bundle?.getInt("planteId") ?:0
         binding = ActivityEditerPlanteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -65,37 +70,78 @@ class EditerPlanteActivity : AppCompatActivity(){
             getContent.launch("image/*")
         }
 
+        val suppressionButton =binding.supprimer
         val validationButton = binding.valider
-        val idPlante = 0
-        val nom_com: String = binding.nomcom.toString()
-        val nom_lat: String = binding.nomlat.toString()
-        val freq1: Int = binding.freq1.toString().toInt()
-        val freq2: Int = binding.freq2.toString().toInt()
-        val freq3: Int = binding.freq3.toString().toInt()
-        val date1: LocalDate? = LocalDate.parse(binding.date1.toString())
-        val date2: LocalDate? = LocalDate.parse(binding.date2.toString())
-        val date3: LocalDate? = LocalDate.parse(binding.date3.toString())
-        val freq_nut1 : Int = binding.freqnut1.toString().toInt()
-        val freq_nut2 : Int = binding.freqnut2.toString().toInt()
-        val freq_nut3 : Int = binding.freqnut3.toString().toInt()
-        val photo: String = localUri.toString()
+
+        var nom_com = binding.nomcom.toString()
+        var nom_lat = binding.nomlat.toString()
+        var freq1 = binding.freq1.toString().toInt()
+        var freq2 = binding.freq2.toString().toInt()
+        var freq3 = binding.freq3.toString().toInt()
+        var datedebut1 = binding.datedebut1.toString().toInt()
+        var datefin1 = binding.datefin1.toString().toInt()
+        var datedebut2 = binding.datedebut2.toString().toInt()
+        var datefin2 = binding.datefin2.toString().toInt()
+        var datedebut3 = binding.datedebut3.toString().toInt()
+        var datefin3 = binding.datefin3.toString().toInt()
+        var photo= localUri.toString()
+
+        if (idPlante!=null){
+            var plante = Plante(0,"")
+            val t = Thread {
+                plante = dao.loadPlante(idPlante)
+            }
+            t.start()
+            t.join()
+            nom_com= plante.nom_com
+            nom_lat = plante.nom_lat
+            freq1 = plante.freq1
+            freq2 = plante.freq2
+            freq3 = plante.freq3
+            datedebut1 = plante.date1_debut
+            datefin1 = plante.date1_fin
+            datedebut2 = plante.date2_debut
+            datefin2 = plante.date2_fin
+            datedebut3 = plante.date3_debut
+            datefin3 = plante.date3_fin
+            photo = plante.photo
+        }
+
+
         validationButton.setOnClickListener {
-            if (dao.loadPlante(idPlante)!=null){
-                dao.updatePlante(
-                    Plante(
-                        0, nom_com, nom_lat, LocalDate.now(), freq1, freq2, freq3,
-                        date1, date2, date3, freq_nut1, freq_nut2, freq_nut3, photo
+            val t = Thread {
+                if (dao.loadPlante(idPlante)!=null){
+                    dao.updatePlante(
+                        Plante(
+                            idPlante, nom_com, nom_lat, freq1, freq2, freq3,
+                            datedebut1, datefin1, datedebut2, datefin2, datedebut3, datefin3, photo, LocalDate.now()
+                        )
                     )
-                )
-            }
-            else {
-                dao.insertPlante(
-                    Plante(
-                        0, nom_com, nom_lat, LocalDate.now(), freq1, freq2, freq3,
-                        date1, date2, date3, freq_nut1, freq_nut2, freq_nut3, photo
+                }
+                else {
+                    dao.insertPlante(
+                        Plante(
+                            0,nom_com, nom_lat, freq1, freq2, freq3,
+                            datedebut1, datefin1, datedebut2, datefin2, datedebut3, datefin3, photo, LocalDate.now()
+                        )
                     )
-                )
+                }
             }
+            t.start()
+            t.join()
+            finish()
+        }
+
+        suppressionButton.setOnClickListener {
+            val t = Thread {
+                dao.deletePlante(
+                    Plante(
+                        idPlante, nom_com, nom_lat, freq1, freq2, freq3,
+                        datedebut1, datefin1, datedebut2, datefin2, datedebut3, datefin3, photo, LocalDate.now()))
+            }
+            t.start()
+            t.join()
+            finish()
         }
     }
 }

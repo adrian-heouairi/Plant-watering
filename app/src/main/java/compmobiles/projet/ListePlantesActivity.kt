@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -27,7 +28,8 @@ class ListePlantesActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Ajout d'une plante", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
-
+            val intent= Intent(this, EditerPlanteActivity::class.java)
+            startActivity(intent)
             Thread {
                 Log.d("BDD", dao.insertPlante(Plante(0, "Abc")).toString())
             }.start()
