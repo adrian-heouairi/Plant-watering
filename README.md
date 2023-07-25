@@ -1,4 +1,6 @@
-Projet réalisé en binôme par :
+A Kotlin Android application to track plant watering, with reminder notifications.
+
+Project realized by:
 
 Adrian HEOUAIRI <adrian.heouairi@etu.u-paris.fr>
 
